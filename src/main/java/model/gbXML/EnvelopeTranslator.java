@@ -162,7 +162,7 @@ public class EnvelopeTranslator {
 		} else {
 			recordInputs("Material:NoMass", "", "", "");
 			recordInputs(materialName, "", "Name", "");
-			recordInputs("MediumRought", "", "Roughness", "");
+			recordInputs("MediumRough", "", "Roughness", "");
 			recordInputs("0.001", "m2-K/W", "Thermal Resistance", "");
 			recordInputs("0.9", "", "Thermal Absorptance", "");
 			recordInputs("0.7", "", "Solar Absorptance", "");
@@ -332,7 +332,7 @@ public class EnvelopeTranslator {
 
 		recordInputs("Material:NoMass", "", "", "");
 		recordInputs(surfaceType + " Air Material", "", "Name", "");
-		recordInputs("MediumRought", "", "Roughness", "");
+		recordInputs("MediumRough", "", "Roughness", "");
 		recordInputs(resistance.toString(), "m2-K/W", "Thermal Resistance", "");
 		recordInputs("0.9", "", "Thermal Absorptance", "");
 		recordInputs("0.7", "", "Solar Absorptance", "");
