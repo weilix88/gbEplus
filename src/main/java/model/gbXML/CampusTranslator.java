@@ -1113,7 +1113,7 @@ public class CampusTranslator {
 			idfWriter.addObject(file);
 
 			// add this default OA schedule here!
-			scheduleTranslator.addSimpleCompactSchedule("Default_Office_OA_Schedule", "OA_id", 1.0, file);
+			scheduleTranslator.addSimpleCompactSchedule(Default_Office_OA_Schedule, Default_Office_OA_Schedule, 1.0, file);
 
 			// sizing zone
 			idfWriter.recordInputs("Sizing:Zone", "", "", "");
