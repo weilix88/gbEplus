@@ -1287,7 +1287,7 @@ public class CampusTranslator {
 			// skips 1, the name of the construction
 			lines.add(value[value.length - 1 - i]);
 			units.add(unit[i]);
-			comments.add(comment[i]);
+			comments.add(comment[i+1]); 
 		}
 
 		return new IDFObject(lines, units, comments, topComments);
