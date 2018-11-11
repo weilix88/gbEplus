@@ -757,6 +757,7 @@ public class CampusTranslator {
 		subSurfaceName = escapeName(subSurfaceId, subSurfaceName);
 
 		// translate openingType;
+		boolean flgSkyLight = false; // flag to check for skylight
 		String openingType = element.getAttributeValue("openingType");
 		if (openingType.contains("FixedWindow") || openingType.contains("OperableWindow")
 				|| openingType.contains("FixedSkylight") || openingType.contains("OperableSkylight")) {
@@ -765,6 +766,9 @@ public class CampusTranslator {
 			openingType = "GlassDoor";
 		} else if (openingType.contains("NonSlidingDoor")) {
 			openingType = "Door";
+		} else if (openingType.contains("FixedSkylight") || openingType.contains("OperableSkylight")) {
+			openingType = "Window";
+			flgSkyLight = true;
 			// do we even want to handling air?
 		} else if (openingType.contains("Air")) {
 			openingType = "Air";
@@ -789,12 +793,12 @@ public class CampusTranslator {
 
 		if (constructionName == null) {
 
-			if (openingType.contains("Window")) {
+			if (openingType.contains("Window") && !flgSkyLight) {
 				constructionName = "Project Window";
+			} else if (openingType.contains("Window") && flgSkyLight) {	
+				constructionName = "Project Skylight";
 			} else if (openingType.contains("SlidingDoor") || openingType.contains("NonSlidingDoor") || openingType.contains("GlassDoor")) {
 				constructionName = "Project Curtain Wall";
-			} else if (openingType.contains("FixedSkylight") || openingType.contains("OperableSkylight")) {
-				constructionName = "Project Skylight";
 				// do we even want to handling air?
 			} else if (openingType.contains("Air")) {
 				constructionName = "Project Window";
