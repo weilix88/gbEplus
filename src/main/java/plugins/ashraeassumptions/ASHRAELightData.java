@@ -70,7 +70,7 @@ public class ASHRAELightData implements EnergyPlusDataAPI{
 	public Map<String, String[]> getValuesInHashMap(String identifier) {
 		HashMap<String, String[]> loadMap = new HashMap<String, String[]>();//loadItem, 1:value, 2 unit
         Element spaceMap = spaceMapperRoot.getChild(identifier);
-        if(spaceMap==null){
+        if(identifier==null){
             //TODO Warning - spaceType is not valid reset to OfficeEnclosed
         	identifier = "OfficeEnclosed";
             spaceMap = spaceMapperRoot.getChild(identifier);
