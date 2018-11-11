@@ -454,6 +454,20 @@ public class CampusTranslator {
 		String surfaceType = element.getAttributeValue("surfaceType");
 		if (surfaceType.contains("Shade")) {
 			// process it as a shading surface
+			String shadeName = element.getChildText("Name", ns);
+			idfWriter.recordInputs("Shading:Building:Detailed", "", "", "");
+			idfWriter.recordInputs(shadeName, "", "Name", "");
+			idfWriter.recordInputs("", "", "Transmittance Schedule Name", "");
+			idfWriter.recordInputs("", "", "Number of Vertices", "");
+
+			for (int j = 0; j < coordinateList.size(); j++) {
+				Double[] point = coordinateList.get(j);
+				for (int k = 0; k < 3; k++) {
+					idfWriter.recordInputs(point[k].toString(), "m", "Vertex " + (j + 1) + " coordinate", "");
+				} 
+			} 
+			idfWriter.addObject(file);
+
 		} else if (surfaceType.contains("FreestandingColumn") || surfaceType.contains("EmbeddedColumn")) {
 			// do nothing
 			return;
