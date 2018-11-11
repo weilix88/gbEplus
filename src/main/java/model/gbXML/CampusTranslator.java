@@ -643,7 +643,7 @@ public class CampusTranslator {
 
 				// second
 				// reverse construction
-				String reversedConsName = envelopeTranslator.getObjectName(constructionIdRef + "_reversed");
+				String reversedConsName = envelopeTranslator.getObjectName(constructionName + "_reversed");
 				IDFObject reversedConstruction = null;
 				if (reversedConsName == null) {
 					List<IDFObject> constructionList = file.getCategoryList("Construction");
@@ -671,7 +671,7 @@ public class CampusTranslator {
 							reversedConsName = reversedConstruction.getName();
 						}
 
-						envelopeTranslator.setReversedConstruction(constructionIdRef + "_reversed", reversedConsName);
+						envelopeTranslator.setReversedConstruction(constructionName + "_reversed", reversedConsName);
 					} else {
 						reversedConsName = "";
 					}
