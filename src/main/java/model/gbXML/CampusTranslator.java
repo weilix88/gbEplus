@@ -505,10 +505,25 @@ public class CampusTranslator {
 				// ceiling type
 			} else if (surfaceType.contains("Ceiling") || surfaceType.contains("UndergroundCeiling")) {
 				eplusSurfaceType = "Ceiling";
+				if (tiltAngle > 179) {
+					tiltAngle = 0.0;
+					String tempId = "";
+					tempId = spaceId1;
+					spaceId1 = spaceId2;
+					spaceId2 = tempId;
+				}	
 				// floor type
+			} else if (surfaceType.contains("InteriorFloor") || surfaceType.contains("ExposedFloor")) {
+				eplusSurfaceType = "Floor";
+				if (tiltAngle < 1) {
+					tiltAngle = 180.0;
+					String tempId = "";
+					tempId = spaceId1;
+					spaceId1 = spaceId2;
+					spaceId2 = tempId;
+				}
 			} else if (surfaceType.contains("UndergroundSlab") || surfaceType.contains("SlabOnGrade")
-					|| surfaceType.contains("InteriorFloor") || surfaceType.contains("RaisedFloor")
-					|| surfaceType.contains("ExposedFloor")) {
+					|| surfaceType.contains("RaisedFloor")) {
 				eplusSurfaceType = "Floor";
 			} else if (surfaceType.contains("Air")) {
 				eplusSurfaceType = assignDefaultSurfaceType(tiltAngle);
