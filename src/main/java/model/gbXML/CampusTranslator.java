@@ -1098,6 +1098,7 @@ public class CampusTranslator {
 
 			// zone outdoor air
 			String oaObjectName = spaceName + " OutdoorAir";
+			String Default_Office_OA_Schedule="Default_Office_OA_Schedule" + spaceName;
 			idfWriter.recordInputs("DesignSpecification:OutdoorAir", "", "", "");
 			idfWriter.recordInputs(oaObjectName, "", "Name", "");
 			idfWriter.recordInputs("Sum", "", "Outdoor Air Method", "");// TODO warning:
@@ -1108,7 +1109,7 @@ public class CampusTranslator {
 			idfWriter.recordInputs("0.0025", "", "Outdoor Air Flow per Zone Floor Area", "");
 			idfWriter.recordInputs("0.0", "", "Outdoor Air Flow per Zone", "");
 			idfWriter.recordInputs("0.0", "", "Outdoor Air FLow Air Changes per Hour", "");
-			idfWriter.recordInputs("Default_Office_OA_Schedule", "", "Outdoor Air FLow Rate Fraction Schedule Name", "");
+			idfWriter.recordInputs(Default_Office_OA_Schedule, "", "Outdoor Air FLow Rate Fraction Schedule Name", "");
 			idfWriter.addObject(file);
 
 			// add this default OA schedule here!
