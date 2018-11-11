@@ -460,12 +460,13 @@ public class CampusTranslator {
 		} else {
 			// regular building surfaces
 			List<Element> adjacentSpaceElements = element.getChildren("AdjacentSpaceId", ns);
+			String spaceId1 = adjacentSpaceElements.get(0).getAttributeValue("spaceIdRef");
+			String spaceId2 = "";
 			if (adjacentSpaceElements.isEmpty()) {
 				// TODO warning: (surface has no adjacent spaces, will not be
 				// translated)
 				return;
 			} else if (adjacentSpaceElements.size() == 2) {
-				String spaceId1 = adjacentSpaceElements.get(0).getAttributeValue("spaceIdRef");
 				String spaceId2 = adjacentSpaceElements.get(1).getAttributeValue("spaceIdRef");
 				if (spaceId1.equals(spaceId2)) {
 					// TODO warning: surface has two adjacent spaces which are
@@ -601,9 +602,9 @@ public class CampusTranslator {
 			idfWriter.recordInputs("BuildingSurface:Detailed", "", "", "");
 
 			// must be an interior surface: ceiling/floor or interior wall
-			if (adjacentSpaceElements.size() == 2) {
-				String adjacentSpaceId = adjacentSpaceElements.get(1).getAttributeValue("spaceIdRef");
-				GbXMLSpace as = bs_idToSpaceMap.get(adjacentSpaceId);
+			if (adjacentSpaceElements.size() == 2 && !spaceId1.equals(spaceId2)) {
+				
+				GbXMLSpace as = bs_idToSpaceMap.get(spaceId2);
 
 				// deal with the ceiling/floors - unify the surface types
 				String tempSurfType = assignDefaultSurfaceType(tiltAngle);
