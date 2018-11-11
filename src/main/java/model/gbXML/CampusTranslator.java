@@ -680,8 +680,19 @@ public class CampusTranslator {
 				idfWriter.recordInputs("BuildingSurface:Detailed", "", "", "");
 				Collections.reverse(coordinateList);
 
+				String eplusSurfaceTypeReverse = "";
+				if (eplusSurfaceType=="Ceiling") {
+					eplusSurfaceTypeReverse="Floor";
+				} else if (eplusSurfaceType=="Floor") {
+					eplusSurfaceTypeReverse="Ceiling";
+				} else if (eplusSurfaceType=="Wall") {
+					eplusSurfaceTypeReverse="Wall";
+				} else if (eplusSurfaceType=="Roof") {
+					eplusSurfaceTypeReverse="Roof";
+				}
+
 				idfWriter.recordInputs(surfaceName + "_reversed", "", "Name", "");
-				idfWriter.recordInputs(eplusSurfaceType, "", "Surface Type", "");
+				idfWriter.recordInputs(eplusSurfaceTypeReverse, "", "Surface Type", "");
 				idfWriter.recordInputs(reversedConsName, "", "Construction Name", "");
 				idfWriter.recordInputs(space2Name, "", "Zone Name", "");
 				idfWriter.recordInputs(outsideBoundaryCondition, "", "Outside Boundary Condition", "");
