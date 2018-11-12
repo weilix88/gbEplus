@@ -746,7 +746,7 @@ public class CampusTranslator {
 				idfWriter.recordInputs(constructionName, "", "Construction Name", "");
 				idfWriter.recordInputs(space1Name, "", "Zone Name", "");
 				idfWriter.recordInputs(outsideBoundaryCondition, "", "Outside Boundary Condition", "");
-				idfWriter.recordInputs(surfaceName, "", "Outside Boundary Condition Object", ""); 
+				idfWriter.recordInputs("", "", "Outside Boundary Condition Object", "");
 				idfWriter.recordInputs(sunExposure, "", "Sun Exposure", "");
 				idfWriter.recordInputs(windExposure, "", "Wind Exposure", "");
 				idfWriter.recordInputs("", "", "View Factor to Ground", "");
