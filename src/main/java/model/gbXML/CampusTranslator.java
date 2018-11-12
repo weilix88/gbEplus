@@ -482,11 +482,12 @@ public class CampusTranslator {
 				return;
 			} else if (adjacentSpaceElements.size() == 2) {
 				String spaceId2 = adjacentSpaceElements.get(1).getAttributeValue("spaceIdRef");
-				if (spaceId1.equals(spaceId2)) {
+				// Do nothing if spaceId1.equals(spaceId2) if return, ground floor does not get translated
+				//if (spaceId1.equals(spaceId2)) {
 					// TODO warning: surface has two adjacent spaces which are
 					// the same space: + spaceId1 + will not be translated
-					return;
-				}
+				//	return;
+				//}
 			} else if (adjacentSpaceElements.size() > 2) {
 				// TODO Error, Surface has more than 2 adjacent surfaces, will
 				// not be translated
