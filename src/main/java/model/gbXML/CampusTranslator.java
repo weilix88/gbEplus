@@ -716,11 +716,9 @@ public class CampusTranslator {
 					eplusSurfaceTypeReverse="Floor";
 				} else if (eplusSurfaceType=="Floor") {
 					eplusSurfaceTypeReverse="Ceiling";
-				} else if (eplusSurfaceType=="Wall") {
-					eplusSurfaceTypeReverse="Wall";
-				} else if (eplusSurfaceType=="Roof") {
-					eplusSurfaceTypeReverse="Roof";
-				}
+				} else {
+					eplusSurfaceTypeReverse=eplusSurfaceType;
+				} 
 
 				idfWriter.recordInputs(surfaceName + "_reversed", "", "Name", "");
 				idfWriter.recordInputs(eplusSurfaceTypeReverse, "", "Surface Type", "");
