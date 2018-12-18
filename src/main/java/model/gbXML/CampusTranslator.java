@@ -745,7 +745,7 @@ public class CampusTranslator {
 
 				idfWriter.recordInputs(surfaceName + "_reversed", "", "Name", "");
 				idfWriter.recordInputs(eplusSurfaceTypeReverse, "", "Surface Type", "");
-				idfWriter.recordInputs(reversedConsName, "", "Construction Name", "");
+				idfWriter.recordInputs(constructionName+ "_reversed", "", "Construction Name", "");
 				idfWriter.recordInputs(space2Name, "", "Zone Name", "");
 				idfWriter.recordInputs(outsideBoundaryCondition, "", "Outside Boundary Condition", "");
 				idfWriter.recordInputs(surfaceName + "_reversed", "", "Outside Boundary Condition Object", "");
