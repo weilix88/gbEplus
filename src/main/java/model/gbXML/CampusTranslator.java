@@ -588,9 +588,25 @@ public class CampusTranslator {
 				// set to ""
 				// WX possible link to our database in the future?
 				if (surfaceType.contains("ExteriorWall")) {
-					constructionName = "Project Wall";
+					if (CADObjectId.contains("Curtain")) {
+						constructionName = "Curtain Wall";
+						String constructionNameRef = envelopeTranslator.getObjectName(constructionName);
+						if (constructionNameRef == null) {
+							envelopeTranslator.addCurtainConstruction(eplusSurfaceType, constructionName, file);
+						}
+					}else {
+						constructionName = "Project Wall";
+					}
 				} else if (surfaceType.contains("InteriorWall")) {
-					constructionName = "Project Partition";
+					if (CADObjectId.contains("Curtain")) {
+						constructionName = "Curtain Wall";
+						String constructionNameRef = envelopeTranslator.getObjectName(constructionName);
+						if (constructionNameRef == null) {
+							envelopeTranslator.addCurtainConstruction(eplusSurfaceType, constructionName, file);
+						}
+					}else {
+						constructionName = "Project Partition";;
+					}
 				} else if (surfaceType.contains("UndergroundWall")) {
 					constructionName = "Project Below Grade Wall";
 					// roof types
