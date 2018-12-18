@@ -627,22 +627,29 @@ public class CampusTranslator {
 				}
 			}
 
-			// translate subsurfaces
-			List<Element> subSurfaces = element.getChildren("Opening", ns);
-			for (Element ss : subSurfaces) {
-				translateSubSurface(ss, file, surfaceName);
-			}
 			// adjacent surface
-			String spaceId = adjacentSpaceElements.get(0).getAttributeValue("spaceIdRef");
-			if (spaceId == null) {
+//			String spaceId = adjacentSpaceElements.get(0).getAttributeValue("spaceIdRef");
+			if (spaceId1 == null) {
 				// TODO Error: there is no space Id in the space.
 			}
-			GbXMLSpace s = bs_idToSpaceMap.get(spaceId);
+			GbXMLSpace s = bs_idToSpaceMap.get(spaceId1);
 			if (s == null) {
 				// TODO Error: there is no space have matching ID: +spaceId;
 			}
 			// assign spaceName for the surface
 			String space1Name = s.getSpaceName();
+			
+			// translate subsurfaces
+			List<Element> subSurfaces = element.getChildren("Opening", ns);
+			for (Element ss : subSurfaces) {
+				if (surfaceType.contains("InteriorWall")) { //Revised to not convert interior windows
+                    continue;
+                }
+//				if (surfaceType.contains("InteriorFloor")) {
+//					continue;
+//				}
+				translateSubSurface(ss, file, surfaceName,eplusSurfaceType,space1Name,outsideBoundaryCondition,sunExposure,windExposure);
+			}
 
 			// add object label
 			idfWriter.recordInputs("BuildingSurface:Detailed", "", "", "");
