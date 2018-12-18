@@ -785,7 +785,7 @@ public class CampusTranslator {
 		} // if - surfaceType
 	}
 
-	private void translateSubSurface(Element element, IDFFileObject file, String hostSurfaceName) {
+	private void translateSubSurface(Element element, IDFFileObject file, String hostSurfaceName, String eplusSurfaceType, String space1Name,String outsideBoundaryCondition, String sunExposure, String windExposure) {
 
 		Element planarGeometryElement = element.getChild("PlanarGeometry", ns);
 		Element polyLoopElement = planarGeometryElement.getChild("PolyLoop", ns);
@@ -844,12 +844,32 @@ public class CampusTranslator {
 		String constructionName = "";
 		// if air opening?
 		if (openingType.contains("Air")) {
-			String id = openingType + "Air";
+			String id = eplusSurfaceType+"Air";
 			constructionName = envelopeTranslator.getObjectName(id);
 			if (constructionName == null) {
-				envelopeTranslator.addAirConstruction(openingType, id, file);
+				envelopeTranslator.addSubAirConstruction(eplusSurfaceType, id, file);
 				constructionName = envelopeTranslator.getObjectName(id);
 			}
+			idfWriter.recordInputs("BuildingSurface:Detailed", "", "", "");
+			idfWriter.recordInputs(subSurfaceName, "", "Name", "");
+			idfWriter.recordInputs(eplusSurfaceType, "", "Surface Type", "");
+			idfWriter.recordInputs(constructionName, "", "Construction Name", "");
+			idfWriter.recordInputs(space1Name, "", "Zone Name", "");
+			idfWriter.recordInputs(outsideBoundaryCondition, "", "Outside Boundary Condition", "");
+			idfWriter.recordInputs(subSurfaceName, "", "Outside Boundary Condition Object", "");  //25-0ct
+//			idfWriter.recordInputs("", "", "Outside Boundary Condition Object", "");  //25-0ct: Original
+			idfWriter.recordInputs(sunExposure, "", "Sun Exposure", "");
+			idfWriter.recordInputs(windExposure, "", "Wind Exposure", "");
+			idfWriter.recordInputs("", "", "View Factor to Ground", "");
+			idfWriter.recordInputs("", "", "Number of Vertices", "");
+			for (int j = 0; j < coordinateList.size(); j++) {
+				Double[] point = coordinateList.get(j);
+				for (int k = 0; k < 3; k++) {
+					idfWriter.recordInputs(point[k].toString(), "m", "Vertex " + (j + 1) + " coordinate", "");
+				} // for
+			} // for
+			idfWriter.addObject(file);
+			return;
 		} else {
 			constructionName = envelopeTranslator.getObjectName(constructionIdRef);
 		}
