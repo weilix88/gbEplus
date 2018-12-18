@@ -822,19 +822,18 @@ public class CampusTranslator {
 		// translate openingType;
 		boolean flgSkyLight = false; // flag to check for skylight
 		String openingType = element.getAttributeValue("openingType");
-		if (openingType.contains("FixedWindow") || openingType.contains("OperableWindow")
-				|| openingType.contains("FixedSkylight") || openingType.contains("OperableSkylight")) {
+		if (openingType.contains("FixedWindow") || openingType.contains("OperableWindow")) { 
 			openingType = "Window";
 		} else if (openingType.contains("SlidingDoor")) {
 			openingType = "GlassDoor";
 		} else if (openingType.contains("NonSlidingDoor")) {
 			openingType = "Door";
-		} else if (openingType.contains("FixedSkylight") || openingType.contains("OperableSkylight")) {
-			openingType = "Window";
-			flgSkyLight = true;
 			// do we even want to handling air?
 		} else if (openingType.contains("Air")) {
 			openingType = "Air";
+		} else if (openingType.contains("FixedSkylight") || openingType.contains("OperableSkylight")) {
+			openingType = "Window";
+			flgSkyLight = true; // Addition
 		}
 
 		String constructionIdRef = element.getAttributeValue("constructionIdRef");
