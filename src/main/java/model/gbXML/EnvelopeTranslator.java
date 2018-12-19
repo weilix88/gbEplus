@@ -287,6 +287,8 @@ public class EnvelopeTranslator {
 			lines.add(tVis.toString());
 			units.add("");
 			comments.add("Visible Transmittance");
+			
+			bs_idToObjectMap.put(windowName, windowName);
 
 			file.addIDFObject(new IDFObject(lines, units, comments, topComments));
 		} else {
@@ -323,6 +325,63 @@ public class EnvelopeTranslator {
 	}
 
 	public void addAirConstruction(String surfaceType, String constructionId, IDFFileObject file) {
+		lines.clear();
+		units.clear();
+		comments.clear();
+		topComments.clear();
+		Double resistance = 0.0;
+		if(surfaceType.equals("Wall")){
+			resistance = 999.0;
+
+			recordInputs("Material:NoMass", "", "", "");
+			recordInputs("Obstacle Wall Material", "", "Name", "");
+			recordInputs("MediumRough", "", "Roughness", "");
+			recordInputs(resistance.toString(), "m2-K/W", "Thermal Resistance", "");
+			recordInputs("0.9", "", "Thermal Absorptance", "");
+			recordInputs("0.7", "", "Solar Absorptance", "");
+			recordInputs("0.7", "", "Visible Absorptance", "");
+			addObject(file);
+	
+			recordInputs("Construction", "", "", "");
+			recordInputs("Obstacle Wall", "", "Name", "");
+			recordInputs("Obstacle Wall Material", "", "Layer", "");
+			addObject(file);
+	
+			bs_idToObjectMap.put(constructionId, "Obstacle Wall");
+		}
+		else {
+			if (surfaceType.equals("Ceiling") || surfaceType.equals("Floor")) {
+				resistance = 0.18;
+			} 
+			else {
+				resistance = 0.15;
+			}
+	
+			recordInputs("Material:NoMass", "", "", "");
+			recordInputs(surfaceType + " Air Material", "", "Name", "");
+			recordInputs("MediumRough", "", "Roughness", "");
+			recordInputs(resistance.toString(), "m2-K/W", "Thermal Resistance", "");
+			recordInputs("0.9", "", "Thermal Absorptance", "");
+			recordInputs("0.7", "", "Solar Absorptance", "");
+			recordInputs("0.7", "", "Visible Absorptance", "");
+			addObject(file);
+	
+			recordInputs("Construction", "", "", "");
+			recordInputs("Air " + surfaceType, "", "Name", "");
+			recordInputs(surfaceType + " Air Material", "", "Layer", "");
+			addObject(file);
+	
+			bs_idToObjectMap.put(constructionId, "Air " + surfaceType);
+		}
+
+		// construction
+
+	}
+	public void addSubAirConstruction(String surfaceType, String constructionId, IDFFileObject file) {
+		lines.clear();
+		units.clear();
+		comments.clear();
+		topComments.clear();
 		Double resistance = 0.0;
 		if (surfaceType.equals("Ceiling") || surfaceType.equals("Floor")) {
 			resistance = 0.18;
@@ -346,7 +405,31 @@ public class EnvelopeTranslator {
 
 		bs_idToObjectMap.put(constructionId, "Air " + surfaceType);
 
-		// construction
+		// sub construction
+
+	}
+	
+	public void addCurtainConstruction(String surfaceType, String constructionId, IDFFileObject file) {
+		lines.clear();
+		units.clear();
+		comments.clear();
+		topComments.clear();
+
+		recordInputs("Material:NoMass", "", "", "");
+		recordInputs("Curtain Air Material", "", "Name", "");
+		recordInputs("MediumRough", "", "Roughness", "");
+		recordInputs("0.15", "m2-K/W", "Thermal Resistance", "");
+		recordInputs("0.9", "", "Thermal Absorptance", "");
+		recordInputs("0.7", "", "Solar Absorptance", "");
+		recordInputs("0.7", "", "Visible Absorptance", "");
+		addObject(file);
+
+		recordInputs("Construction", "", "", "");
+		recordInputs("Curtain Wall", "", "Name", "");
+		recordInputs("Curtain Air Material", "", "Layer", "");
+		addObject(file);
+
+		bs_idToObjectMap.put(constructionId, "Curtain Wall");
 
 	}
 
