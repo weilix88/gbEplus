@@ -36,6 +36,20 @@ public class DOEReferenceEquipmentData implements EnergyPlusDataAPI{
 	        }
 	 }
 	 
+	 public DOEReferenceEquipmentData(String fileaddress){
+		 SAXBuilder builder = new SAXBuilder();
+	        try {
+	            Document spaceDoc = (Document)builder.build(new File(FilesPath.readProperty("ResourcePath") + "/spacemap.xml"));
+	            Document ilDoc = (Document)builder.build(new File(fileaddress));
+	            spaceMapperRoot = spaceDoc.getRootElement();
+	            internalLoadRoot = ilDoc.getRootElement();
+	        } catch (JDOMException e) {
+	            e.printStackTrace();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	 }
+	 
 	@Override
 	public String dataBaseName() {
 		return "DOEReferenceEquipmentData";
