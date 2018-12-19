@@ -40,23 +40,6 @@ public class ASHRAELightData implements EnergyPlusDataAPI{
             e.printStackTrace();
         }
     }
-	
-	public ASHRAELightData(String fileaddress){
-        SAXBuilder builder = new SAXBuilder();
-        try {
-        	InputStream spaceFile = ASHRAELightData.class.getClassLoader().getResourceAsStream("resource/spacemap.xml");      	
-        	Document spaceDoc = builder.build( spaceFile );
-        	InputStream iLoadsFile = ASHRAELightData.class.getClassLoader().getResourceAsStream(fileaddress);    	
-        	Document ilDoc = builder.build( iLoadsFile );  
-            spaceMapperRoot = spaceDoc.getRootElement();
-            internalLoadRoot = ilDoc.getRootElement();
-        } catch (JDOMException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 
 	@Override
 	public String dataBaseName() {
@@ -101,10 +84,9 @@ public class ASHRAELightData implements EnergyPlusDataAPI{
             Element lightEle = lightObject.get(i);
             String spaceTypeAttr = lightEle.getAttributeValue("spaceType");
             if(spaceTypeAttr.equals(light)){
-                loadMap.put("LightPowerPerArea", new String[3]);
+                loadMap.put("LightPowerPerArea", new String[2]);
                 loadMap.get("LightPowerPerArea")[0] = lightEle.getText();
                 loadMap.get("LightPowerPerArea")[1] = lightEle.getAttributeValue("unit");
-                loadMap.get("LightPowerPerArea")[2] = lightEle.getAttributeValue("schedule");
             }
         }
         return loadMap;
