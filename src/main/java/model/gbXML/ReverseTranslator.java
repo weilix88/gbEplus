@@ -149,10 +149,17 @@ public class ReverseTranslator {
             }//for
             //do construction before surfaces
             //TODO progress bar info
+            ArrayList<String> constructionNameList = new ArrayList<String>(); ;
             List<Element> layerElements = gbXML.getChildren("Layer",ns);
             List<Element> contructionElements = gbXML.getChildren("Construction",ns);
             for(int i=0; i<contructionElements.size(); i++){
                 Element constructionElement = contructionElements.get(i);
+                if (!constructionNameList.contains(constructionElement.getChildText("Name", ns))) {
+                	constructionNameList.add(constructionElement.getChildText("Name", ns));
+                }else {
+                	envelopeTranslator.translateConstruction(constructionElement, layerElements);
+                	continue;
+                }
                 file.addIDFObject(envelopeTranslator.translateConstruction(constructionElement, layerElements));
             }//for
             
