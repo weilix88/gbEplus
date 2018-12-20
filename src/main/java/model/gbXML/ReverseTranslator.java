@@ -301,11 +301,12 @@ public class ReverseTranslator {
         idfWriter.recordInputs("","","Maximum plant Iterations","");
     }
 
-    public void exportFile(String idfFilePath){
+    public void exportFile(String idfFilePath, String OutputName){
         try {
-            PrintWriter out = new PrintWriter(idfFilePath + "/test.idf");
-            out.println(file.getIDFFileContent());
-            out.close();
+            
+        		PrintWriter out = new PrintWriter(idfFilePath +"/"+OutputName+".idf");
+        		out.println(file.getIDFFileContent());
+        		out.close();    
             
             //GeometryFromIDFFileObject idfConverter = new GeometryFromIDFFileObject();
             //idfConverter.extractGeometry(file);
