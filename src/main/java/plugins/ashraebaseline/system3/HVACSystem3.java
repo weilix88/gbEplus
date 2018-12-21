@@ -44,23 +44,20 @@ public class HVACSystem3 implements SystemType3 {
 		ArrayList<EplusObject> demandSideSystemTemplate = objectLists.get("Demand Side System");
 
 		HashMap<String, GbXMLSpace> spaceMap = building.getSpaceMap();
+		
+		ArrayList<String> spaces = new ArrayList<String>();
 
-		Set<String> spaceItrSet = spaceMap.keySet();
-		Iterator<String> spaceMapIterator = spaceItrSet.iterator();
-
-		int zoneCounter = 0;
-		while (spaceMapIterator.hasNext()) {
-
-			String id = spaceMapIterator.next();
-			// first process the demand side system and their connection to
-			// supply side system
-			GbXMLSpace space = spaceMap.get(id);
-				zoneCounter++;
-				demandSideSystem.addAll(processDemandTemp(space.getSpaceName(), demandSideSystemTemplate));
-				// add the outdoor air object for demand zone
-				//demandSideSystem.add(space.getOutdoorAirObject());
-				supplySideSystem.addAll(processSupplyTemp(space.getSpaceName(), supplySideSystemTemplate));
-			
+		Iterator<String> spaceKeyItr = spaceMap.keySet().iterator();
+		ArrayList<String> floorMap = new ArrayList<String>(); 
+		while (spaceKeyItr.hasNext()) {
+			String key = spaceKeyItr.next();
+			GbXMLSpace space = spaceMap.get(key);
+			String[] zoneNameInfo = space.getSpaceName().split(":");
+			if (!floorMap.contains(zoneNameInfo[0])) {
+				floorMap.add(zoneNameInfo[0]);
+				supplySideSystem.addAll(processSupplyTemp(zoneNameInfo[0],space.getSpaceName(), supplySideSystemTemplate));
+			}
+			demandSideSystem.addAll(processDemandTemp(zoneNameInfo[0],space.getSpaceName(), demandSideSystemTemplate));	
 		}
 
 		objectLists.put("Supply Side System", supplySideSystem);
@@ -74,7 +71,7 @@ public class HVACSystem3 implements SystemType3 {
 	 * @param supplySideSystemTemplate
 	 * @return
 	 */
-	private ArrayList<EplusObject> processSupplyTemp(String zone, ArrayList<EplusObject> supplySideSystemTemplate) {
+	private ArrayList<EplusObject> processSupplyTemp(String floor, String zone, ArrayList<EplusObject> supplySideSystemTemplate) {
 		ArrayList<EplusObject> supplyTemp = new ArrayList<EplusObject>();
 		for (EplusObject eo : supplySideSystemTemplate) {
 			EplusObject temp = eo.clone();
@@ -82,8 +79,8 @@ public class HVACSystem3 implements SystemType3 {
 			/*
 			 * replace the special characters that contains floors
 			 */
-			if (temp.hasSpecialCharacters()) {
-				temp.replaceSpecialCharacters(zone);
+			if (temp.contains("Floor%")) {
+				temp.replaceSpecialCharacters(floor);
 			}
 
 			// check if this is the connection between supply side and demand
@@ -112,13 +109,13 @@ public class HVACSystem3 implements SystemType3 {
 	 * @param zoneTemp
 	 * @return
 	 */
-	private ArrayList<EplusObject> processDemandTemp(String zone, ArrayList<EplusObject> zoneTemp) {
+	private ArrayList<EplusObject> processDemandTemp(String floor, String zone, ArrayList<EplusObject> zoneTemp) {
 		ArrayList<EplusObject> demandTemp = new ArrayList<EplusObject>();
 		for (EplusObject eo : zoneTemp) {
 			EplusObject temp = eo.clone();
 			// check special characters to avoid useless loop inside the replace
 			// special characters
-			if (temp.hasSpecialCharacters()) {
+			if (temp.contains("Zone%")) {
 				temp.replaceSpecialCharacters(zone);
 			}
 			demandTemp.add(temp);
