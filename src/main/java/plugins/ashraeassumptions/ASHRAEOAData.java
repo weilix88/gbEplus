@@ -97,6 +97,7 @@ public class ASHRAEOAData implements EnergyPlusDataAPI {
 																		// 2
 																		// unit
 		Element spaceMap = spaceMapperRoot.getChild(identifier);
+		System.out.print(identifier);
 		if (identifier == null) {
 			// TODO Warning - spaceType is not valid reset to OfficeEnclosed
 			identifier = "OfficeEnclosed";

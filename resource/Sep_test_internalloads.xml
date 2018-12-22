@@ -1,0 +1,11 @@
+<dataset year="2015" reference="Green Mark For Non-Residential Buildings NRB:2015">
+	<light spaceType="office" unit="WattPerSquareMeter" schedule="0.18303539,0.16129426,0.1582383 ,0.15572232,0.15581863,0.16152303,0.19037049,0.38925846,0.62304277,0.85257973,0.86162207,0.86238774,0.83790636,0.74776496,0.81037225,0.84651473,0.85469042,0.86598315,0.82059258,0.85719243,0.72911186,0.56139662,0.41402138,0.24117949,0.2303338">3.566</light>
+	<data buildingType="office" spaceType="office" reference="DOE Commercial Prototype Buildings">
+		<EquipPowerPerArea unit="WattPerSquareMeter" powerType="Electricity" programId="BuildSimHub" schedule="0.26551235,0.27525206,0.27116848,0.26480577,0.27495213,0.26204517,0.40298565,0.30651371,0.49707194,0.80564382,0.73496862,0.68824475,0.68488945,0.61337732,0.69885975,0.71723261,0.69368987,0.68306729,0.57768997,0.41874714,0.36819588,0.35264677,0.28945353,0.27877594,0.30195">5.39</EquipPowerPerArea>
+	</data>
+	<data buildingType="office" spaceType="office_space">
+		<OAFlowPerPerson unit="LPerSec" programId="BuildSimHub">2.5</OAFlowPerPerson>
+		<OAFlowPerArea unit="LPerSecPerSquareM" programId="BuildSimHub">0.3</OAFlowPerArea>
+		<PeopleNumber unit="SquareMPerPerson" programId="BuildSimHub">18.58</PeopleNumber>
+	</data>
+</dataset>

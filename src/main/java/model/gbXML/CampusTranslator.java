@@ -197,10 +197,21 @@ public class CampusTranslator {
 					oaPlugin = dataPlugins.get(i);
 				}
 			}
+			Map<String, String[]> oaMap;
+			Double numPeople;
 			if(oaPlugin==null){
 				oaPlugin = new ASHRAEOAData();//default to ASHRAE data
+				oaMap = oaPlugin.getValuesInHashMap(space.getSpaceType());
+				numPeople = space.getPeopleNumber();
+				if (numPeople == null) {
+					numPeople = Double.valueOf(oaMap.get("PeopleNumber")[0]);
+					// TODO Warning, the people value is empty, fill it in based
+					// on its spaceType
+				}
+			} else {
+				oaMap = oaPlugin.getValuesInHashMap(space.getSpaceType());
+				numPeople = Double.parseDouble(oaMap.get("PeopleNumber")[0]);
 			}
-			Map<String, String[]> oaMap = oaPlugin.getValuesInHashMap(space.getSpaceType());
 			
 			//************Set-up Lights assumption***********
 			EnergyPlusDataAPI lightPlugin = null;
@@ -230,16 +241,8 @@ public class CampusTranslator {
 			if (conditionType.equals("Heated") || conditionType.equals("Cooled")
 					|| conditionType.equals("HeatedAndCooled") || conditionType.equals("Unconditioned")) {
 
-				Double numPeople = space.getPeopleNumber();
-
 				if (conditionType.equals("Unconditioned")) {
 					numPeople = 0.0; // force to 0.0 for unconditioned spaces.
-				}
-
-				if (numPeople == null) {
-					numPeople = Double.valueOf(oaMap.get("PeopleNumber")[0]);
-					// TODO Warning, the people value is empty, fill it in based
-					// on its spaceType
 				}
 
 				Double heatGain = space.getPeopleHeatGain()[0] + space.getPeopleHeatGain()[1];
