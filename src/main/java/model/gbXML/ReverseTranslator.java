@@ -149,10 +149,17 @@ public class ReverseTranslator {
             }//for
             //do construction before surfaces
             //TODO progress bar info
+            ArrayList<String> constructionNameList = new ArrayList<String>(); ;
             List<Element> layerElements = gbXML.getChildren("Layer",ns);
             List<Element> contructionElements = gbXML.getChildren("Construction",ns);
             for(int i=0; i<contructionElements.size(); i++){
                 Element constructionElement = contructionElements.get(i);
+                if (!constructionNameList.contains(constructionElement.getChildText("Name", ns))) {
+                	constructionNameList.add(constructionElement.getChildText("Name", ns));
+                }else {
+                	envelopeTranslator.translateConstruction(constructionElement, layerElements);
+                	continue;
+                }
                 file.addIDFObject(envelopeTranslator.translateConstruction(constructionElement, layerElements));
             }//for
             
@@ -294,11 +301,12 @@ public class ReverseTranslator {
         idfWriter.recordInputs("","","Maximum plant Iterations","");
     }
 
-    public void exportFile(String idfFilePath){
+    public void exportFile(String idfFilePath, String OutputName){
         try {
-            PrintWriter out = new PrintWriter(idfFilePath + "/test.idf");
-            out.println(file.getIDFFileContent());
-            out.close();
+            
+        		PrintWriter out = new PrintWriter(idfFilePath +"/"+OutputName+".idf");
+        		out.println(file.getIDFFileContent());
+        		out.close();    
             
             //GeometryFromIDFFileObject idfConverter = new GeometryFromIDFFileObject();
             //idfConverter.extractGeometry(file);
