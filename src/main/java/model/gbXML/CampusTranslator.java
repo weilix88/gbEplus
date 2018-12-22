@@ -1227,7 +1227,17 @@ public class CampusTranslator {
 		idfWriter.addObject(file);
 
 		// do story - for baseline purpose
+		ArrayList<String> floorIDs = new ArrayList<String>();
+		ArrayList<String> floorNames = new ArrayList<String>();
+		List<Element> floorElements = element.getChildren("BuildingStorey", ns);
 		numberOfFloors = element.getChildren("BuildingStorey", ns).size();
+		for (int i = 0; i < numberOfFloors; i++) {
+			Element floor = floorElements.get(i);
+			floorIDs.add(floor.getAttributeValue("id"));
+			floorNames.add(floor.getChildText("Name", ns));
+//			System.out.print(floor.getAttributeValue("id"));
+//			System.out.print(floor.getChildText("Name", ns));
+		}
 
 		// translate storey
 
@@ -1240,7 +1250,7 @@ public class CampusTranslator {
 			GbXMLSpace aSpace = new GbXMLSpace(lengthMultiplier, ns);
 			aSpace.setAreaUnit(areaUnit);
 			aSpace.setVolumeUnit(volumnUnit);
-			aSpace.translateSpace(space);
+			aSpace.translateSpace(space,floorIDs,floorNames);
 
 			if (aSpace.getThermalZoneId() != null) {
 				aSpace.setGbXMLThermalZone(bs_idToThermalZoneMap.get(aSpace.getThermalZoneId()));
