@@ -1098,6 +1098,7 @@ public class CampusTranslator {
 
 			// zone outdoor air
 			String oaObjectName = spaceName + " OutdoorAir";
+			String Default_Office_OA_Schedule="Default_Office_OA_Schedule" + spaceName;
 			idfWriter.recordInputs("DesignSpecification:OutdoorAir", "", "", "");
 			idfWriter.recordInputs(oaObjectName, "", "Name", "");
 			idfWriter.recordInputs("Sum", "", "Outdoor Air Method", "");// TODO warning:
