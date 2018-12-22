@@ -319,12 +319,20 @@ public class CampusTranslator {
 			String lightSchedule = space.getLightScheduleId();
 			if (lightSchedule == null) {
 				lightSchedule = ScheduleTranslator.BUILDING_LIGHT_SCHEDULE;
-				if (scheduleTranslator.getScheduleNameFromID(lightSchedule) == null) {
-					scheduleTranslator.addLightSchedule(ScheduleTranslator.BUILDING_LIGHT_SCHEDULE,
-							ScheduleTranslator.BUILDING_LIGHT_SCHEDULE, file);
+				if (lightMap.get("LightPowerPerArea")[2] == null) {
+					if (scheduleTranslator.getScheduleNameFromID(lightSchedule) == null) {
+						scheduleTranslator.addLightSchedule(ScheduleTranslator.BUILDING_LIGHT_SCHEDULE,
+								ScheduleTranslator.BUILDING_LIGHT_SCHEDULE, file);
+					}
+				} else {
+					if (scheduleTranslator.getScheduleNameFromID(lightSchedule) == null) {
+						scheduleTranslator.addSchedule(ScheduleTranslator.BUILDING_LIGHT_SCHEDULE,
+								ScheduleTranslator.BUILDING_LIGHT_SCHEDULE, lightMap.get("LightPowerPerArea")[2], file);
+					}
 				}
 			}
 
+			
 			idfWriter.recordInputs("Lights", "", "", "");
 			idfWriter.recordInputs(space.getSpaceName() + " Lights", "", "Name", "");
 			idfWriter.recordInputs(space.getSpaceName(), "", "Zone or ZoneList Name", "");
@@ -356,9 +364,16 @@ public class CampusTranslator {
 			//TODO WX: more fuel types???
 			if (equipmentSchedule == null) {
 				equipmentSchedule = ScheduleTranslator.BUILDING_EQUIP_SCHEDUEL;
-				if (scheduleTranslator.getScheduleNameFromID(equipmentSchedule) == null) {
-					scheduleTranslator.addLightSchedule(ScheduleTranslator.BUILDING_EQUIP_SCHEDUEL,
-							ScheduleTranslator.BUILDING_EQUIP_SCHEDUEL, file);
+				if (equipMap.get("Electricity")[2] == null) {
+					if (scheduleTranslator.getScheduleNameFromID(equipmentSchedule) == null) {
+						scheduleTranslator.addLightSchedule(ScheduleTranslator.BUILDING_EQUIP_SCHEDUEL,
+								ScheduleTranslator.BUILDING_EQUIP_SCHEDUEL, file);
+					}
+				} else {
+					if (scheduleTranslator.getScheduleNameFromID(equipmentSchedule) == null) {
+						scheduleTranslator.addSchedule(ScheduleTranslator.BUILDING_EQUIP_SCHEDUEL,
+								ScheduleTranslator.BUILDING_EQUIP_SCHEDUEL, equipMap.get("Electricity")[2], file);
+					}
 				}
 			}
 
