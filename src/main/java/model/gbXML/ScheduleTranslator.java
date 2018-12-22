@@ -346,6 +346,70 @@ public class ScheduleTranslator {
     }
     
     /**
+     * this function adds schedule for XML input
+     */
+    public void addSchedule(String scheduleName, String scheduleId, String value, IDFFileObject file){
+        bs_idToObjectMap.put(scheduleId, scheduleName);
+        idfWriter.recordInputs("Schedule:Compact","","","");
+        idfWriter.recordInputs(scheduleName,"","Name","");
+        idfWriter.recordInputs("Fraction","","Schedule Type Limits name","");
+        idfWriter.recordInputs("Through: 12/31","","Field 1","");
+        idfWriter.recordInputs("For: Weekdays","","Field 2","");
+        idfWriter.recordInputs("Until: 01:00","","Field 3","");
+        idfWriter.recordInputs(value.split("\\,")[0],"","Field 4","");
+        idfWriter.recordInputs("Until: 02:00","","Field 5","");
+        idfWriter.recordInputs(value.split("\\,")[1],"","Field 6","");
+        idfWriter.recordInputs("Until: 03:00","","Field 7","");
+        idfWriter.recordInputs(value.split("\\,")[2],"","Field 8","");
+        idfWriter.recordInputs("Until: 04:00","","Field 9","");
+        idfWriter.recordInputs(value.split("\\,")[3],"","Field 10","");
+        idfWriter.recordInputs("Until: 05:00","","Field 11","");
+        idfWriter.recordInputs(value.split("\\,")[4],"","Field 12","");
+        idfWriter.recordInputs("Until: 06:00","","Field 13","");
+        idfWriter.recordInputs(value.split("\\,")[5],"","Field 14","");
+        idfWriter.recordInputs("Until: 07:00","","Field 15","");
+        idfWriter.recordInputs(value.split("\\,")[6],"","Field 16","");
+        idfWriter.recordInputs("Until: 08:00","","Field 17","");
+        idfWriter.recordInputs(value.split("\\,")[7],"","Field 18","");
+        idfWriter.recordInputs("Until: 09:00","","Field 19","");
+        idfWriter.recordInputs(value.split("\\,")[8],"","Field 20","");
+        idfWriter.recordInputs("Until: 10:00","","Field 21","");
+        idfWriter.recordInputs(value.split("\\,")[9],"","Field 22","");
+        idfWriter.recordInputs("Until: 11:00","","Field 23","");
+        idfWriter.recordInputs(value.split("\\,")[10],"","Field 24","");
+        idfWriter.recordInputs("Until: 12:00","","Field 25","");
+        idfWriter.recordInputs(value.split("\\,")[11],"","Field 26","");
+        idfWriter.recordInputs("Until: 13:00","","Field 27","");
+        idfWriter.recordInputs(value.split("\\,")[12],"","Field 28","");
+        idfWriter.recordInputs("Until: 14:00","","Field 29","");
+        idfWriter.recordInputs(value.split("\\,")[13],"","Field 30","");
+        idfWriter.recordInputs("Until: 15:00","","Field 31","");
+        idfWriter.recordInputs(value.split("\\,")[14],"","Field 32","");
+        idfWriter.recordInputs("Until: 16:00","","Field 33","");
+        idfWriter.recordInputs(value.split("\\,")[15],"","Field 34","");
+        idfWriter.recordInputs("Until: 17:00","","Field 35","");
+        idfWriter.recordInputs(value.split("\\,")[16],"","Field 36","");
+        idfWriter.recordInputs("Until: 18:00","","Field 37","");
+        idfWriter.recordInputs(value.split("\\,")[17],"","Field 38","");
+        idfWriter.recordInputs("Until: 19:00","","Field 39","");
+        idfWriter.recordInputs(value.split("\\,")[18],"","Field 40","");
+        idfWriter.recordInputs("Until: 20:00","","Field 41","");
+        idfWriter.recordInputs(value.split("\\,")[19],"","Field 42","");
+        idfWriter.recordInputs("Until: 21:00","","Field 43","");
+        idfWriter.recordInputs(value.split("\\,")[20],"","Field 44","");
+        idfWriter.recordInputs("Until: 22:00","","Field 45","");
+        idfWriter.recordInputs(value.split("\\,")[21],"","Field 46","");
+        idfWriter.recordInputs("Until: 23:00","","Field 47","");
+        idfWriter.recordInputs(value.split("\\,")[22],"","Field 48","");
+        idfWriter.recordInputs("Until: 24:00","","Field 49","");
+        idfWriter.recordInputs(value.split("\\,")[23],"","Field 50","");
+        idfWriter.recordInputs("For: AllOtherDays","","Field 51","");
+        idfWriter.recordInputs("Until: 24:00","","Field 52","");
+        idfWriter.recordInputs(value.split("\\,")[24],"","Field 53","");   
+        idfWriter.addObject(file);
+    }
+    
+    /**
      * Add people schedule from default
      * Add a default office schedule to the energy model
      * Currently, there is only one option: work 6 days and everyday 18 hours.
