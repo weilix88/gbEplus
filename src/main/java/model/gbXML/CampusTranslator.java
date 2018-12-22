@@ -985,16 +985,14 @@ public class CampusTranslator {
 
 				Double tempOA = Double.valueOf(oaMap.get("OAFlowPerPerson")[0]);
 				oaPerPerson = tempOA
-						* GbXMLUnitConversion.flowConversionRate(oaMap.get("OAFlowPerPerson")[1], "CubicMPerSec");		
+						* GbXMLUnitConversion.flowConversionRate(oaMap.get("OAFlowPerPerson")[1], "CubicMPerSec");
 			}
 			idfWriter.recordInputs(oaPerPerson.toString(), "", "Outdoor Air Flow per Person", "");
 
-			
 			if (oaPerArea == null) {
 				Double tempOA = Double.valueOf(oaMap.get("OAFlowPerArea")[0]);
 				oaPerArea = tempOA * GbXMLUnitConversion.flowPerAreaConversionRate(oaMap.get("OAFlowPerArea")[1],
 						"CubicMPerSecPerSquareM");
-				idfWriter.recordInputs(oaPerArea.toString(), "", "Assumed Outdoor Air Flow per Zone Floor Area", "");
 			}
 			idfWriter.recordInputs(oaPerArea.toString(), "", "Outdoor Air Flow per Zone Floor Area", "");
 
@@ -1194,24 +1192,24 @@ public class CampusTranslator {
 			idfWriter.recordInputs("DesignSpecification:ZoneAirDistribution", "", "", "");
 			idfWriter.recordInputs(airDistObjectName, "", "Name", "");
 			idfWriter.recordInputs("1", "", "Zone Air Distribution Effectiveness in Cooling Mode", "");
-			idfWriter.recordInputs("", "", "Zone Air Distribution Effectiveness in Heating Mode", "");
+			idfWriter.recordInputs("0.8", "", "Zone Air Distribution Effectiveness in Heating Mode", "");
 			idfWriter.recordInputs("", "", "Zone Air Distribution Effectiveness Schedule Name", "");
 			idfWriter.recordInputs("", "", "Zone Secondary Recirculation Fraction", "");
 			idfWriter.addObject(file);
 
 			// zone outdoor air
-			String Default_Office_OA_Schedule="Default_Office_OA_Schedule"+spaceName;
 			String oaObjectName = spaceName + " OutdoorAir";
+			String Default_Office_OA_Schedule="Default_Office_OA_Schedule" + spaceName;
 			idfWriter.recordInputs("DesignSpecification:OutdoorAir", "", "", "");
 			idfWriter.recordInputs(oaObjectName, "", "Name", "");
-			idfWriter.recordInputs("Flow/Person", "", "Outdoor Air Method", "");// TODO warning:
+			idfWriter.recordInputs("Sum", "", "Outdoor Air Method", "");// TODO warning:
 																// outdoor air
 																// method is set
 																// to "SUM";
-			idfWriter.recordInputs("0.0055", "m3/s-person", "Outdoor Air Flow per Person", "");
-			idfWriter.recordInputs("", "m3/s-m2", "Outdoor Air Flow per Zone Floor Area", "");
-			idfWriter.recordInputs("", "m3/s", "Outdoor Air Flow per Zone", "");
-			idfWriter.recordInputs("", "1/hr", "Outdoor Air FLow Air Changes per Hour", "");
+			idfWriter.recordInputs("0.0003", "", "Outdoor Air Flow per Person", "");
+			idfWriter.recordInputs("0.0025", "", "Outdoor Air Flow per Zone Floor Area", "");
+			idfWriter.recordInputs("0.0", "", "Outdoor Air Flow per Zone", "");
+			idfWriter.recordInputs("0.0", "", "Outdoor Air FLow Air Changes per Hour", "");
 			idfWriter.recordInputs(Default_Office_OA_Schedule, "", "Outdoor Air FLow Rate Fraction Schedule Name", "");
 			idfWriter.addObject(file);
 
@@ -1221,49 +1219,41 @@ public class CampusTranslator {
 			// sizing zone
 			idfWriter.recordInputs("Sizing:Zone", "", "", "");
 			idfWriter.recordInputs(spaceName, "", "Zone or ZoneList Name", "");
-			idfWriter.recordInputs("SupplyAirTemperature", "", "Zone Cooling Design Supply Air Temperature Input Method", "");
-			idfWriter.recordInputs("14", "C", "Zone Cooling Design Supply Air Temperature", "");
-			idfWriter.recordInputs("", "deltaC", "Zone Cooling Design Supply Air Temperature Difference", "");
-			idfWriter.recordInputs("SupplyAirTemperature", "", "Zone Heating Design Supply Air Temperature Input Method", "");
-			idfWriter.recordInputs("", "C", "Zone Heating Design Supply Air Temperature", "");
-			idfWriter.recordInputs("", "deltaC", "Zone Heating Design Supply Air Temperature Difference", "");
-			idfWriter.recordInputs("0.009", "", "Zone Cooling Design Supply Air Humidity Ratio", "");
-			idfWriter.recordInputs("0", "", "Zone Heating Design Supply Air Humidity Ratio", "");
+			idfWriter.recordInputs("TemperatureDifference", "", "Zone Cooling Design Supply Air Temperature Input Method", "");
+			idfWriter.recordInputs("12.8", "C", "Zone Cooling Design Supply Air Temperature", "");
+			idfWriter.recordInputs("11", "deltaC", "Zone Cooling Design Supply Air Temperature Difference", "");
+			idfWriter.recordInputs("TemperatureDifference", "", "Zone Heating Design Supply Air Temperature Input Method", "");
+			idfWriter.recordInputs("50", "C", "Zone Heating Design Supply Air Temperature", "");
+			idfWriter.recordInputs("11", "deltaC", "Zone Heating Design Supply Air Temperature Difference", "");
+			idfWriter.recordInputs("0.0103", "", "Zone Cooling Design Supply Air Humidity Ratio", "");
+			idfWriter.recordInputs("0.0066", "", "Zone Heating Design Supply Air Humidity Ratio", "");
 			idfWriter.recordInputs(oaObjectName, "", "Design Specification Outdoor Air Object Name", "");
 			// sizing factors
-			idfWriter.recordInputs("", "", "Zone Heating Sizing Factor", "");
+			idfWriter.recordInputs("1.25", "", "Zone Heating Sizing Factor", "");
 			idfWriter.recordInputs("1.15", "", "Zone Cooling Sizing Factor", "");
 			// Design air methods
 			idfWriter.recordInputs("DesignDay", "", "Cooling Design Air Flow Method", "");
-			idfWriter.recordInputs("", "m3/s", "Cooling Design Air Flow Rate", "");
+			idfWriter.recordInputs("0", "m3/s", "Cooling Design Air Flow Rate", "");
 			idfWriter.recordInputs("0.000762", "m3/s-m2", "Cooling Minimum Air Flow per Zone Floor Area", "");
 			idfWriter.recordInputs("0", "m3/s", "Cooling Minimum Air Flow", "");
-			idfWriter.recordInputs("0.3", "", "Cooling Minimum Air Fraction", "");
+			idfWriter.recordInputs("0", "", "Cooling Minimum Air Fraction", "");
 
 			idfWriter.recordInputs("DesignDay", "", "Heating Design Air Flow Method", "");
-			idfWriter.recordInputs("", "m3/s", "Heating Design Air Flow Rate", "");
-			idfWriter.recordInputs("0.0", "m3/s-m2", "Heating Maximum Air Flow per Zone Floor Area", "");
-			idfWriter.recordInputs("0.0", "m3/s", "Heating Maximum Air Flow", "");
-			idfWriter.recordInputs("0.0", "", "Heating Maximum Air Fraction", "");
+			idfWriter.recordInputs("0", "m3/s", "Heating Design Air Flow Rate", "");
+			idfWriter.recordInputs("0.002032", "m3/s-m2", "Heating Maximum Air Flow per Zone Floor Area", "");
+			idfWriter.recordInputs("01415762", "m3/s", "Heating Maximum Air Flow", "");
+			idfWriter.recordInputs("0.3", "", "Heating Maximum Air Fraction", "");
 			// air distribution
 			idfWriter.recordInputs(airDistObjectName, "", "Design Specification Zone Air Distribution Object Name", "");
-			idfWriter.recordInputs("No", "", "Account for Dedicated Outdoor Air System", "");
-			idfWriter.recordInputs("NeutralSupplyAir", "", "Dedicated Outdoor Air System Control Strategy", "");
-			idfWriter.recordInputs("autosize", "C", "Dedicated Outdoor Air Low Setpoint Temperature for Design", "");
-			idfWriter.recordInputs("autosize", "C", "Dedicated Outdoor Air High Setpoint Temperature for Design", "");
 			idfWriter.addObject(file);
 
 			// now thermostat
-			//thermalZone=space.getthermalzone();
-			//String heatScheduleId = thermalZone.getHeatScheduleId();
-			//String coolScheduleId = thermalZone.getCoolScheduleId();
+			// String heatScheduleId = thermalZone.getHeatScheduleId();
+			// String coolScheduleId = thermalZone.getCoolScheduleId();
 
-//			String heatScheduleId=ScheduleTranslator.BUILDING_HTGSP_SCHEDULE+spaceName;
-			String coolScheduleId=ScheduleTranslator.BUILDING_CLGSP_SCHEDULE+spaceName;
-			
-			String thermostatType = "ThermostatSetpoint:SingleCooling";
-			Integer controlType = 2;
-			String thermostatName = "Single Cooling"+spaceName;
+			String thermostatType = "ThermostatSetpoint:DualSetpoint";
+			Integer controlType = 4;
+			String thermostatName = "Dual Setpoint Dual SP";
 
 			String controlTypeSchedule = scheduleTranslator.getScheduleNameFromID("controlType " + controlType);
 			if (controlTypeSchedule == null) {
@@ -1273,14 +1263,14 @@ public class CampusTranslator {
 				controlTypeSchedule = scheduleTranslator.getScheduleNameFromID("controlType " + controlType);
 			}
 
-//			scheduleTranslator.addHeatingSchedule(heatScheduleId, heatScheduleId, file);
-//			String heatName = heatScheduleId;
-			scheduleTranslator.addCoolingSchedule(coolScheduleId, coolScheduleId, file);
-			String coolName = coolScheduleId;
+			scheduleTranslator.addHeatingSchedule(ScheduleTranslator.BUILDING_HTGSP_SCHEDULE, ScheduleTranslator.BUILDING_HTGSP_SCHEDULE, file);
+			String heatName = ScheduleTranslator.BUILDING_HTGSP_SCHEDULE;
+			scheduleTranslator.addCoolingSchedule(ScheduleTranslator.BUILDING_CLGSP_SCHEDULE, ScheduleTranslator.BUILDING_CLGSP_SCHEDULE, file);
+			String coolName = ScheduleTranslator.BUILDING_CLGSP_SCHEDULE;
 
 			idfWriter.recordInputs(thermostatType, "", "", "");
 			idfWriter.recordInputs(thermostatName, "", "Name", "");
-//			idfWriter.recordInputs(heatName, "", "Heating Setpoint Temperature Schedule Name", "");
+			idfWriter.recordInputs(heatName, "", "Heating Setpoint Temperature Schedule Name", "");
 			idfWriter.recordInputs(coolName, "", "Cooling Setpoint Temperature Schedule Name", "");
 			idfWriter.addObject(file);
 
