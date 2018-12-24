@@ -53,7 +53,7 @@ public class ASHRAEOAData implements EnergyPlusDataAPI {
 			Document oaDoc = (Document) builder
 					.build(new File(FilesPath.readProperty("ResourcePath") + "/ashrae62.1oa.xml"));
 			Document spaceDoc = (Document) builder
-					.build(new File(fileaddress));
+					.build(new File(FilesPath.readProperty("ResourcePath") + "/spacemap.xml"));
 			ASHRAEOARoot = oaDoc.getRootElement();
 			spaceMapperRoot = spaceDoc.getRootElement();
 
@@ -97,7 +97,6 @@ public class ASHRAEOAData implements EnergyPlusDataAPI {
 																		// 2
 																		// unit
 		Element spaceMap = spaceMapperRoot.getChild(identifier);
-		System.out.print(identifier);
 		if (identifier == null) {
 			// TODO Warning - spaceType is not valid reset to OfficeEnclosed
 			identifier = "OfficeEnclosed";
