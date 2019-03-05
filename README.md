@@ -1,7 +1,6 @@
 # gbEplus
 gbEplus is an open source gbXML to EnergyPlus convertor written in JAVA.
-The tool was firstly inspired by the [OpenStudio](https://github.com/NREL/OpenStudio) gbXML module. The initial version was developed by [weilixu](https://github.com/weilixu) to facilitates the creation of simple IDF geometries from revit. Quickly, after realizing the simple geometry conversion is merely enough for a successful energy simulation, Weili and [wanghp18](https://github.com/wanghp18) from CMU IW started working on the second version development in their spare time in CMU.
-Currently, this open source project is maintained by [BuildSimHub Inc](https://www.buildsimhub.net/) and we welcome people use the tool or contribute their part to the code. 
+The tool was first inspired by the [OpenStudio](https://github.com/NREL/OpenStudio) gbXML module. The initial version was developed by [weilixu](https://github.com/weilixu) to facilitates the creation of simple IDF geometries from revit-based gbXML. Further developments and testing were carried out by Weili, [wanghp18](https://github.com/wanghp18) and [adChong](https://github.com/adChong). Currently, this open source project is maintained by [BuildSimHub Inc](https://www.buildsimhub.net/) and we welcome people use the tool or contribute their part to the code. 
 
 ## How to use the Tool?
 To run the converter, a user must define a few parameters:
