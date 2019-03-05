@@ -2,6 +2,7 @@ package main.java.plugins.ashraebaseline;
 
 import main.java.model.gbXML.CampusTranslator;
 import main.java.plugins.ashraebaseline.system3.HVACSystem3Factory;
+import main.java.plugins.ashraebaseline.system7.HVACSystem7Factory;
 
 public class HVACSystemFactory {
 	private String systemType;
@@ -19,10 +20,10 @@ public class HVACSystemFactory {
 	 * @return
 	 */
 	public HVACSystem createSystem(CampusTranslator building) {
-		// if(systemType.equals("System Type 7")){
-		// HVACSystem7Factory factory = new HVACSystem7Factory(building);
-		// system = factory.getSystem();
-		// }else 
+		if(systemType.equals("System Type 7")){
+		 HVACSystem7Factory factory = new HVACSystem7Factory(building);
+		 system = factory.getSystem();
+		 }else 
 		if(systemType.equals("System Type 3")){
 		 HVACSystem3Factory factory = new HVACSystem3Factory(building);
 		 system = factory.getSystem();}

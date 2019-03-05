@@ -1,0 +1,30 @@
+<dataset year="2010" reference="DOE Commercial Prototype Buildings">
+	<light spaceType="office_enclosed" unit="WattPerSquareMeter">12</light>
+	<light spaceType="office_openplan" unit="WattPerSquareMeter">12</light>
+	<light spaceType="conference_meeting_multipurpose" unit="WattPerSquareMeter">14</light>
+	<light spaceType="classroom_lecture_training" unit="WattPerSquareMeter">15</light>
+	<light spaceType="classroom_lecture_training_penitentiary" unit="WattPerSquareMeter">14</light>
+	<light spaceType="lobby" unit="WattPerSquareMeter">14</light>
+	<light spaceType="audience_area" unit="WattPerSquareMeter">10</light>
+	<light spaceType="audience_area_for_convention_center" unit="WattPerSquareMeter">8</light>
+	<light spaceType="atrium_first_three_floors" unit="WattPerSquareMeter">6</light>
+	<light spaceType="atrium_each_additional_floor" unit="WattPerSquareMeter">2</light>
+	<light spaceType="lounge_recreation" unit="WattPerSquareMeter">13</light>
+	<light spaceType="laboratory" unit="WattPerSquareMeter">15</light>
+	<light spaceType="stair_active" unit="WattPerSquareMeter">6</light>
+	<light spaceType="active_storage" unit="WattPerSquareMeter">9</light>
+	<light spaceType="inactive_storage" unit="WattPerSquareMeter">3</light>
+	<light spaceType="electrical_mechanical" unit="WattPerSquareMeter">16</light>
+	<light spaceType="convention_center_exhibit_space" unit="WattPerSquareMeter">14</light>
+	<light spaceType="workshop" unit="WattPerSquareMeter">20</light>
+	<data buildingType="office" spaceType="office" reference="DOE Commercial Prototype Buildings">
+		<LightPowerPerArea unit="WattPerSquareMeter" programId="BuildSimHub">10.76</LightPowerPerArea>
+		<EquipPowerPerArea unit="WattPerSquareMeter" powerType="Electricity" programId="BuildSimHub">10.76</EquipPowerPerArea>
+		<PeopleNumber unit="SquareMPerPerson" programId="BuildSimHub">18.58</PeopleNumber>
+	</data>
+	<data buildingType="office" spaceType="conference_meeting_multipurpose" reference="DOE Commercial Prototype Buildings">
+		<LightPowerPerArea unit="WattPerSquareMeter" programId="BuildSimHub">14</LightPowerPerArea>
+		<EquipPowerPerArea unit="WattPerSquareMeter" powerType="Electricity" programId="BuildSimHub">10.76</EquipPowerPerArea>
+		<PeopleNumber unit="SquareMPerPerson" programId="BuildSimHub">18.58</PeopleNumber>
+	</data>
+</dataset>

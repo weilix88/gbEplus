@@ -636,12 +636,19 @@
 		<ilSpace>nurse_station</ilSpace>
 		<lightSpace>hospital_nurse_station</lightSpace>		
 	</NurseStationHospitalOrHealthcare>
-	<OfficeEnclosed>
+<!-- 	<OfficeEnclosed>
 		<oaBuilding>office</oaBuilding>
 		<oaSpace>office_space</oaSpace>
 		<ilBuilding>office</ilBuilding>
 		<ilSpace>office</ilSpace>
 		<lightSpace>office_enclosed</lightSpace>			
+	</OfficeEnclosed> -->
+	<OfficeEnclosed>
+		<oaBuilding>office</oaBuilding>
+		<oaSpace>office_space</oaSpace>
+		<ilBuilding>office</ilBuilding>
+		<ilSpace>office</ilSpace>
+		<lightSpace>office</lightSpace>			
 	</OfficeEnclosed>
 	<OfficeOpenPlan>
 		<oaBuilding>office</oaBuilding>

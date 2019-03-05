@@ -14,7 +14,9 @@ public class GbXMLSpace {
     private GbXMLThermalZone thermalZone;
     private String spaceId;
     private String storeyId;
+    private String storeyName;
     private String spaceName;
+    private String spaceShortName;
     private String spaceType;
     private String thermalZoneId;
     private String lightScheduleId;
@@ -160,7 +162,7 @@ public class GbXMLSpace {
     	return storeyId;
     }
 
-    public void translateSpace(Element element){
+    public void translateSpace(Element element, ArrayList<String> floorIDs, ArrayList<String> floorNames){
         //first process the attributes
         thermalZoneId = element.getAttributeValue("zoneIdRef");
         lightScheduleId = element.getAttributeValue("lightScheduleIdRef");
@@ -169,6 +171,13 @@ public class GbXMLSpace {
         buildingStoreyId = element.getAttributeValue("buildingStoreyIdRef");
         conditionType = element.getAttributeValue("conditionType");
         spaceId = element.getAttributeValue("id");
+        
+        try {
+        	spaceShortName = element.getChildText("Name", ns);
+        }catch(Exception e) {
+        	spaceShortName = "Unknown";
+        }
+        
         spaceType = element.getAttributeValue("spaceType");
         storeyId = element.getAttributeValue("buildingStoreyIdRef");
         //System.out.println(spaceType);
@@ -190,7 +199,19 @@ public class GbXMLSpace {
             buildingStoreyId = "0";//WX in case there is no building story id
         }
         
-        spaceName = buildingStoreyId + ":" + spaceId;
+
+        for (int i = 0; i < floorNames.size(); i++) {
+        	if (buildingStoreyId.equals(floorIDs.get(i))) {
+        		try{
+        			storeyName=floorNames.get(i);
+        		}catch(Exception e) {
+        			storeyName="Unknown";
+        		}
+        	}
+        }
+
+        spaceName = storeyName + ":" + spaceShortName;
+//        spaceName = buildingStoreyId + ":" + spaceId;
         
         //process assumptions
         Element area = element.getChild("Area",ns);

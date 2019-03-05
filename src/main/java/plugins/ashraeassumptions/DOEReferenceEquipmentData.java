@@ -36,6 +36,20 @@ public class DOEReferenceEquipmentData implements EnergyPlusDataAPI{
 	        }
 	 }
 	 
+	 public DOEReferenceEquipmentData(String fileaddress){
+		 SAXBuilder builder = new SAXBuilder();
+	        try {
+	            Document spaceDoc = (Document)builder.build(new File(FilesPath.readProperty("ResourcePath") + "/spacemap.xml"));
+	            Document ilDoc = (Document)builder.build(new File(fileaddress));
+	            spaceMapperRoot = spaceDoc.getRootElement();
+	            internalLoadRoot = ilDoc.getRootElement();
+	        } catch (JDOMException e) {
+	            e.printStackTrace();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	 }
+	 
 	@Override
 	public String dataBaseName() {
 		return "DOEReferenceEquipmentData";
@@ -60,7 +74,7 @@ public class DOEReferenceEquipmentData implements EnergyPlusDataAPI{
 	public Map<String, String[]> getValuesInHashMap(String identifier) {
 	      HashMap<String, String[]> loadMap = new HashMap<String,String[]>();//loadItem, 1:value, 2 unit
 	        Element spaceMap = spaceMapperRoot.getChild(identifier);
-	        if(spaceMap==null){
+	        if(identifier==null){
 	            //TODO Warning - spaceType is not valid reset to OfficeEnclosed
 	        	identifier = "OfficeEnclosed";
 	            spaceMap = spaceMapperRoot.getChild(identifier);
@@ -82,9 +96,10 @@ public class DOEReferenceEquipmentData implements EnergyPlusDataAPI{
 	                    Element equip = equipmentList.get(k);
 	                    String fuelType = equip.getAttributeValue("powerType");
 	                    
-	                    loadMap.put(fuelType, new String[2]);
+	                    loadMap.put(fuelType, new String[3]);
 	                    loadMap.get(fuelType)[0] = equip.getText();
 	                    loadMap.get(fuelType)[1] = equip.getAttributeValue("unit");
+	                    loadMap.get(fuelType)[2] = equip.getAttributeValue("schedule");
 
 	                }
 	            }

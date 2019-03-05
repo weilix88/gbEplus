@@ -197,10 +197,21 @@ public class CampusTranslator {
 					oaPlugin = dataPlugins.get(i);
 				}
 			}
+			Map<String, String[]> oaMap;
+			Double numPeople;
 			if(oaPlugin==null){
 				oaPlugin = new ASHRAEOAData();//default to ASHRAE data
+				oaMap = oaPlugin.getValuesInHashMap(space.getSpaceType());
+				numPeople = space.getPeopleNumber();
+				if (numPeople == null) {
+					numPeople = Double.valueOf(oaMap.get("PeopleNumber")[0]);
+					// TODO Warning, the people value is empty, fill it in based
+					// on its spaceType
+				}
+			} else {
+				oaMap = oaPlugin.getValuesInHashMap(space.getSpaceType());
+				numPeople = Double.parseDouble(oaMap.get("PeopleNumber")[0]);
 			}
-			Map<String, String[]> oaMap = oaPlugin.getValuesInHashMap(space.getSpaceType());
 			
 			//************Set-up Lights assumption***********
 			EnergyPlusDataAPI lightPlugin = null;
@@ -230,16 +241,8 @@ public class CampusTranslator {
 			if (conditionType.equals("Heated") || conditionType.equals("Cooled")
 					|| conditionType.equals("HeatedAndCooled") || conditionType.equals("Unconditioned")) {
 
-				Double numPeople = space.getPeopleNumber();
-
 				if (conditionType.equals("Unconditioned")) {
 					numPeople = 0.0; // force to 0.0 for unconditioned spaces.
-				}
-
-				if (numPeople == null) {
-					numPeople = Double.valueOf(oaMap.get("PeopleNumber")[0]);
-					// TODO Warning, the people value is empty, fill it in based
-					// on its spaceType
 				}
 
 				Double heatGain = space.getPeopleHeatGain()[0] + space.getPeopleHeatGain()[1];
@@ -1098,6 +1101,7 @@ public class CampusTranslator {
 
 			// zone outdoor air
 			String oaObjectName = spaceName + " OutdoorAir";
+			String Default_Office_OA_Schedule="Default_Office_OA_Schedule" + spaceName;
 			idfWriter.recordInputs("DesignSpecification:OutdoorAir", "", "", "");
 			idfWriter.recordInputs(oaObjectName, "", "Name", "");
 			idfWriter.recordInputs("Sum", "", "Outdoor Air Method", "");// TODO warning:
@@ -1226,7 +1230,17 @@ public class CampusTranslator {
 		idfWriter.addObject(file);
 
 		// do story - for baseline purpose
+		ArrayList<String> floorIDs = new ArrayList<String>();
+		ArrayList<String> floorNames = new ArrayList<String>();
+		List<Element> floorElements = element.getChildren("BuildingStorey", ns);
 		numberOfFloors = element.getChildren("BuildingStorey", ns).size();
+		for (int i = 0; i < numberOfFloors; i++) {
+			Element floor = floorElements.get(i);
+			floorIDs.add(floor.getAttributeValue("id"));
+			floorNames.add(floor.getChildText("Name", ns));
+//			System.out.print(floor.getAttributeValue("id"));
+//			System.out.print(floor.getChildText("Name", ns));
+		}
 
 		// translate storey
 
@@ -1239,7 +1253,7 @@ public class CampusTranslator {
 			GbXMLSpace aSpace = new GbXMLSpace(lengthMultiplier, ns);
 			aSpace.setAreaUnit(areaUnit);
 			aSpace.setVolumeUnit(volumnUnit);
-			aSpace.translateSpace(space);
+			aSpace.translateSpace(space,floorIDs,floorNames);
 
 			if (aSpace.getThermalZoneId() != null) {
 				aSpace.setGbXMLThermalZone(bs_idToThermalZoneMap.get(aSpace.getThermalZoneId()));

@@ -46,6 +46,25 @@ public class ASHRAEOAData implements EnergyPlusDataAPI {
 
 	}
 
+	public ASHRAEOAData(String fileaddress) {
+		SAXBuilder builder = new SAXBuilder();
+
+		try {
+			Document oaDoc = (Document) builder
+					.build(new File(FilesPath.readProperty("ResourcePath") + "/ashrae62.1oa.xml"));
+			Document spaceDoc = (Document) builder
+					.build(new File(FilesPath.readProperty("ResourcePath") + "/spacemap.xml"));
+			ASHRAEOARoot = oaDoc.getRootElement();
+			spaceMapperRoot = spaceDoc.getRootElement();
+
+		} catch (JDOMException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
 	@Override
 	public String dataBaseName() {
 		return "ASHRAEOAData";
@@ -78,7 +97,7 @@ public class ASHRAEOAData implements EnergyPlusDataAPI {
 																		// 2
 																		// unit
 		Element spaceMap = spaceMapperRoot.getChild(identifier);
-		if (spaceMap == null) {
+		if (identifier == null) {
 			// TODO Warning - spaceType is not valid reset to OfficeEnclosed
 			identifier = "OfficeEnclosed";
 			spaceMap = spaceMapperRoot.getChild(identifier);

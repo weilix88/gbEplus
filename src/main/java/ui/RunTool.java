@@ -2,7 +2,11 @@ package main.java.ui;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.logging.Logger;
 
+import org.apache.commons.io.FilenameUtils;
 import org.jdom2.Document;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
@@ -20,32 +24,63 @@ import main.java.plugins.ashraebaseline.ASHRAEHVAC;
  *
  */
 public class RunTool {
-	
-    public static void main(String[] args){
+	   public static Logger logger = Logger.getLogger(RunTool.class.getName());
+	   public static StringBuilder logMsg = new StringBuilder();
+	   public static String TEST_XML_STRING = null;
+	   public static int PRETTY_PRINT_INDENT_FACTOR = 4;
 
-        SAXBuilder builder = new SAXBuilder();
-        File xmlFile = new File("/Users/weilixu/Dropbox/BCD-weili/gbXMLTest/temp.xml");
-        Document doc;
-        try {
-            doc = (Document) builder.build(xmlFile);
-            ReverseTranslator trans = new ReverseTranslator(doc, "8.6");
-            //register construction
-            trans.registerDataPlugins(new ASHRAEConstructions());
-            trans.registerDataPlugins(new ASHRAELightData());
-            trans.registerDataPlugins(new ASHRAEOAData());
-            trans.registerDataPlugins(new DOEReferenceEquipmentData());
-            trans.registerDataPlugins(new ASHRAEHVAC());
-            
-            trans.convert();
-            trans.exportFile("/Users/weilixu/Dropbox/BCD-weili/gbXMLTest");
-            
-        } catch (JDOMException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
+	   public static void main(String[] args) {	 
+		   
+//	       String gbXMLfilepath = args[0];  
+//	       String OutputFilepath = args[1]; 
+		   String gbXMLfilepath = "./resource/test2.xml";
+		   String OutputFilepath = "./output"; 
+	       System.out.println("translating gbXML to IDF.....");
+	       Path p = Paths.get(gbXMLfilepath);        
+	       String OutputFileName =   FilenameUtils.getBaseName(p.getFileName().toString());           
+	       exportIDF(gbXMLfilepath, OutputFilepath, OutputFileName);
+	   }
 
-}
+
+	   public static void captureLog(String msg) {
+	       logMsg.append(System.getProperty("line.separator"));
+	       logMsg.append(msg);
+	   }
+
+	   public static int exportIDF(String gbxmlfilepath, String idfOutputpath, String outputfilename) {
+	       SAXBuilder builder = new SAXBuilder();
+	       try {
+
+	           File xmlFile = new File(gbxmlfilepath);
+
+	           Document doc;
+	           doc = (Document) builder.build(xmlFile);
+
+	           ReverseTranslator trans = new ReverseTranslator(doc, "8.6");
+	           //register construction
+	           trans.registerDataPlugins(new ASHRAEConstructions());
+	           trans.registerDataPlugins(new ASHRAELightData("./resource/Sep_test_internalloads.xml"));
+	           trans.registerDataPlugins(new ASHRAEOAData("./resource/Sep_test_internalloads.xml"));
+	           trans.registerDataPlugins(new DOEReferenceEquipmentData("./resource/Sep_test_internalloads.xml"));
+//	           trans.registerDataPlugins(new ASHRAEHVAC());
+	           trans.convert();
+	           trans.exportFile(idfOutputpath, outputfilename);
+	           System.out.println("exported IDF to " + idfOutputpath +  outputfilename + ".idf"  );
+	           
+	       } catch (JDOMException e) {
+//	            // TODO Auto-generated catch block
+//	            e.printStackTrace();
+//	            System.out.println(¡°Severe : ¡± + e.toString());
+
+
+	       } catch (IOException e) {
+//	            // TODO Auto-generated catch block
+//	            e.printStackTrace();
+//	            System.out.println(¡°Severe : ¡± + e.toString());
+	       }
+
+	       return 0;
+	   }
+
+
+	}

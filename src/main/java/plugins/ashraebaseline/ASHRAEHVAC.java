@@ -95,7 +95,7 @@ public class ASHRAEHVAC implements EnergyPlusDataAPI{
 //			System.out.println("We select System Type 5");
 //		}
 		
-		factory = new HVACSystemFactory("System Type 3");
+		factory = new HVACSystemFactory("System Type 7");
 		system = factory.createSystem(campusTranslator);
 	}
 	

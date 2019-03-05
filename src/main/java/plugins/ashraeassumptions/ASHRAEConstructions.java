@@ -40,7 +40,7 @@ public class ASHRAEConstructions implements EnergyPlusDataAPI{
 
 	@Override
 	public void writeInSystem(IDFFileObject objectFile, HashMap<String, String> id_to_NameMap) {
-		construction = new ConstructionParser("Climate Zone 4");//TODO need to adapt it later
+		construction = new ConstructionParser("Climate Zone 1");//TODO need to adapt it later
 		
 		// add new building envelope related objects
 		ArrayList<String> lines = new ArrayList<String>();//values
